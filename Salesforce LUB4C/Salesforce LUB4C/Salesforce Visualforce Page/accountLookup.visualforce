@@ -1,0 +1,355 @@
+<apex:page standardController="Account" showheader="true">
+    <script src="{!URLFOR($Resource.jQuery, 'jquery-ui-1.11.4.custom/external/jquery/jquery.js')}"/>
+    <script src="{!URLFOR($Resource.jQuery, 'jquery-ui-1.11.4.custom/jquery-ui.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jQuery, 'jquery-ui-1.11.4.custom/jquery-ui.min.css')}"/>
+    <style>
+        .left-container {
+            float: left;
+            width: 50%;
+        }
+        .or-container {
+            float: left;
+            margin: 50px;
+        }
+        .right-container {
+            float: left;
+            width: 50%;
+        }
+        .create-new-button, .search-results, .pbSubExtra {
+            display: none;
+        }
+        .clearfix {
+            display: inline-block;
+            width: 100%;
+        }
+        .right-container .pbSubheader {
+            margin-top: 0;
+            border-top: none !important;
+        }
+        .poweredByMaestroImg {
+            width: 300px;
+            position: absolute;
+            right: 10px;
+            top: 15px;
+        }
+    </style>
+    <apex:form >
+        <apex:sectionHeader title="Account Edit" subtitle="New Account" />
+        <div style="float: right;">
+            <img class="poweredByMaestroImg" alt="" src="{!URLFOR($Resource.poweredByMaestro)}" />
+        </div>
+		
+        <apex:pageBlock title="Account Lookup Before Create" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton onclick="lookUpMember(); return false;" value="Lookup" />
+                <apex:commandButton onclick="createNew(); return false;" value="Continue Create" styleClass="create-new-button" />
+                <apex:commandButton action="{!cancel}" value="Cancel" />
+            </apex:pageBlockButtons>
+			<div class="navigationControl">
+			</div>
+
+			<div class="container clearfix">
+				<div class="left-container">
+					<apex:pageBlockSection title="Account Information" columns="1">
+						<apex:inputField value="{!account.name}" styleClass="account-Name" />
+						<apex:inputField value="{!account.phone}" styleClass="account-PhoneNumber" />
+						<apex:inputField value="{!account.fax}" styleClass="account-Fax" />
+						<apex:inputField value="{!account.website}" styleClass="account-WebSite" />
+					</apex:pageBlockSection>
+				</div>
+				
+				<div class="right-container">
+					<apex:pageBlockSection title="Address Information" columns="1" id="addressTitle">
+						<apex:inputField value="{!account.billingstreet}" styleClass="account-AddressLine1" style="cols='27'" />
+						<apex:inputField value="{!account.billingcity}" styleClass="account-City" />
+						<apex:inputField value="{!account.billingstate}" styleClass="account-StateProvince" />
+						<apex:inputField value="{!account.billingpostalcode}" styleClass="account-PostalCode" />
+					</apex:pageBlockSection>
+				</div>
+
+				<div class="search-results">
+					<apex:pageBlockSection title="Results"></apex:pageBlockSection>
+					<table class="list results-table" border="0" cellspacing="0" cellpadding="0">
+						<thead>
+							<tr class="headerRow">
+								<!-- OPTIONAL UPDATES: Result grid column headings -->
+								<th class="zen-deemphasize">Similarity</th>
+								<th class="zen-deemphasize">Name</th>
+								<th class="zen-deemphasize">Phone</th>
+								<th class="zen-deemphasize">Website</th>
+								<th class="zen-deemphasize">Street</th>
+								<th class="zen-deemphasize">City</th>
+								<th class="zen-deemphasize">State/Province</th>
+								<th class="zen-deemphasize">ZIP/Postal Code</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>        
+        </apex:pageBlock>
+    </apex:form>
+	
+    <script type="text/javascript">
+		// MANDATORY UPDATE - Salesforce Attribute Identitifers
+		// 					- Gathered during Step 2 of the Implementation Process
+        var accountName = "acc2",
+            accountPhone = "acc10",
+            accountFax = "acc11",
+            accountWebsite = "acc12",
+            billingStreet = "acc17street",
+            billingCity = "acc17city",
+            billingState = "acc17state",
+            billingPostal = "acc17zip";
+			
+        var selectedRow;
+        var strategyName = "Customer_Account-Name";
+		
+		// MANDATORY UPDATE - Maestro Web Service Properties
+		// 					- listed in order based on which column
+		//					  in the results table will display the data
+        var columns = [
+            "MatchScore",
+            "Name",
+            "Phone",
+            "Website",
+            "BillingStreet",
+            "BillingCity",
+            "BillingStateProvince",
+            "BillingZipPostalCode"
+        ];
+        var baseUrl = "https://" + window.location.hostname + "/";
+        var j$ = jQuery.noConflict();
+        
+        var required = j$(".pbSubExtra").first();
+        j$(j$(".pbSubheader")[1]).prepend(required);
+        required.show();
+        
+        document.onreadystatechange = function(){
+            if (document.readyState == "complete") {
+                j$("input").keypress(function (e) {
+                    if (e.which == 13) {
+                        lookUpMember();
+                    }
+                });
+            }
+        }
+    
+        function lookUpMember() {
+			
+			// MANDATORY UPDATE - this is the URL for your Account LUB4C web service
+			var ajaxURL = "https://corpmdm02.corp.profisee.com/SalesforceLUB4C/Account.svc/LookupBeforeCreate";
+			
+            var fields = disableInputs();
+            j$(".search-results").hide();
+            
+            // call ajax
+            j$.ajax({
+                url: ajaxURL,
+                type: "POST",
+                crossdomain: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                    "AttributeValues": getMaestroData()
+                })
+            }).done(function (msg) {
+                j$(".create-new-button").show();
+                if (msg == undefined || msg == "") {
+                    alert("No similar members found.");
+                    enableInputs(fields);
+                } else {
+                    var tbody = parseResultIntoHtmlTable(msg);
+                    var table = j$(".search-results").find("tbody");
+                    table.html(tbody);
+                    j$(".search-results").show();
+                    selectedRow = null;
+                    registerGridListener(table);
+                    //createResultsTable(results);
+                    enableInputs(fields);
+                }
+            }).fail(function (jqXhr, status, err) {
+                j$(".create-new-button").show();
+                alert(err);
+                enableInputs(fields);
+            });
+                
+            // end call ajax
+            
+//            var results = [
+//                {
+//                    "Code": "168",
+//                    "MemberId": "DummyData",
+//                    "Name": "Metro Cycle Shop",
+//                    "AddressLine1": "499 Bobby Jones Expway",
+//                    "Nullify": "Ignore",
+//                    "NullifyName": "Don't display this"
+//                },
+//                {
+//                    "Code": "178",
+//                    "MemberId": "DisregardData",
+//                    "Name": "Metro Cycle Shop",
+//                    "AddressLine1": "499 Bobby Jones Expway",
+//                    "Nullify": "Ignore",
+//                    "NullifyName": "Don't display this"
+//                }
+//            ];
+                        
+//            var tbody = parseResultIntoHtmlTable(results);
+//            var table = j$(".search-results").find("tbody");
+//            table.html(tbody);
+//            j$(".search-results").show();
+//            j$(".create-new-button").show();
+//            selectedRow = null;
+//            registerGridListener(table);
+//            //createResultsTable(results);
+//            enableInputs(fields);            
+        }
+        
+        function disableInputs() {
+            var fields = [];
+            j$(document).find("input, select, textarea, button").not(":disabled").prop("disabled", true).each(function () {
+                fields.push(this);
+            });
+            return fields;
+        }
+
+        function enableInputs(fields) {
+            j$(fields).prop("disabled", false);
+        }
+
+        function parseResultIntoHtmlTable(results) {
+            var html = "";
+            j$.each(results, function () {
+                var result = this;
+				
+				// MANDATORY UPDATE - Pull Salesforce ID
+				// 					- Verify you are getting the correct
+				//					  property value from the Account LUB4C
+				//					  web service
+				var salesforceId = result.AccountID;
+				
+                html += "<tr class='dataRow' data-member-id='" + salesforceId + "'>";
+                j$.each(columns, function () {
+                    var text = result[this];
+                    if (text == null)
+                        text = "";
+                    html += "<td class='dataCell'>";
+                    if (this == "Name") {
+                        html += "<a href='" + createEntityRecordUrl(salesforceId) + "'>" + text + "</a>";
+                    } else {
+                        html += text;
+                    }
+                    + "</td>";
+                });
+                html += "</tr>";
+            });
+            return html;
+        }
+
+        function createEntityRecordUrl(id) {
+            if (id == undefined)
+                return;
+
+            return baseUrl + id;
+        }
+        
+        function registerGridListener(parent) {
+            if (parent == undefined)
+                return;
+            var grid = j$(parent);
+            j$(grid).children("tr")
+//                .click(function () {
+//                j$(this).addClass("selectedRow").siblings().removeClass("selectedRow");
+//                selectedRow = j$(this).get();
+//                })
+//                .dblclick(function () {
+//                openMember(j$(this).get());
+//                })
+                .hover(
+                function () {
+                    j$(this).addClass("highlight");
+                }, function () {
+                    j$(this).removeClass("highlight");
+                }
+            );
+        }
+
+        function openMember(row) {
+            var r = row;
+            if (r == undefined) {
+                r = selectedRow;
+            }
+            if (r == undefined) {
+                return;
+            }
+            var accountSourceId = getAccountSourceId(r);
+            if (accountSourceId != undefined) {
+                window.location.href = createEntityRecordUrl(accountSourceId);
+                return;
+            }
+            var contactSourceId = getContactSourceId(r);
+            if (contactSourceId != undefined) {
+                window.location.href = createEntityRecordUrl(contactSourceId);
+                return;
+            }
+        }
+
+        function getAccountSourceId(row) {
+            if (row == undefined)
+                return;
+            return j$(row).attr("data-member-id");
+        }
+        
+        function createNew() {
+			// MANDATORY UPDATE - Proper 'New Account' page
+			// 					- you need to make sure that the property
+			//					  URL is used for creating a new account
+            var url = baseUrl + "/001/e?retURL=%2Fhome%2Fhome.jsp";
+			
+            if (j$(".account-Name").val()) {
+                url += "&" + accountName + "=" + j$(".account-Name").val();
+            }
+            if (j$(".account-PhoneNumber").val()) {
+                url += "&" + accountPhone + "=" + j$(".account-PhoneNumber").val();
+            }
+            if (j$(".account-Fax").val()) {
+                url += "&" + accountFax + "=" + j$(".account-Fax").val();
+            }
+            if (j$(".account-WebSite").val()) {
+                url += "&" + accountWebsite + "=" + j$(".account-WebSite").val();
+            }
+            if (j$(".account-AddressLine1").val()) {
+                url += "&" + billingStreet + "=" + j$(".account-AddressLine1").val();
+            }
+            if (j$(".account-city").val()) {
+                url += "&" + billingCity + "=" + j$(".account-City").val();
+            }
+            if (j$(".account-StateProvince").val()) {
+                url += "&" + billingState + "=" + j$(".account-StateProvince").val();
+            }
+            if (j$(".account-postalcode").val()) {
+                url += "&" + billingPostal + "=" + j$(".account-PostalCode").val();
+            }
+            window.location.href = url;
+        }
+        
+        function getMaestroData() {
+            var attributes = [];
+            var fields = getFormFields();
+            j$.each(fields, function () {
+                var value = j$(this).val();
+                var name = j$(this).attr("class");
+                var attr = {};
+                attr.Key = name;
+                attr.Value = value;
+                attributes.push(attr);
+            });
+            return attributes;
+        }
+        
+        function getFormFields() {
+            return j$(".container").find("input[name], select[name], textarea[name]");
+        }
+    </script>
+</apex:page>
