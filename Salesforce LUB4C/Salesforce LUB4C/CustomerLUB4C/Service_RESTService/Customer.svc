@@ -1,0 +1,1 @@
+<%@ ServiceHost Service="Mdm.Profisee_Customer360Service.ServiceREST.Customer" Factory="System.ServiceModel.Activation.WebServiceHostFactory" %>

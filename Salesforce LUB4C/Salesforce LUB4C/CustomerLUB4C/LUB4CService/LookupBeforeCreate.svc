@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Profisee.LUB4CService.LookupBeforeCreate" CodeBehind="LookupBeforeCreate.svc.cs" %>
