@@ -1,0 +1,89 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{22200078-2F00-4417-B649-30AE9C8933B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLibrary", "ServiceLibrary\ServiceLibrary.csproj", "{80AD1CA4-3C72-490B-9ED9-70BFA1187503}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_RESTService", "Service_RESTService\Service_RESTService.csproj", "{2AB49924-EFAD-410E-A488-C1B37A6E051C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{80C9695D-4230-40B3-B8CB-7597D2524A91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{55D73354-CB50-4949-B655-6565CBB01DFE}"
+	ProjectSection(SolutionItems) = preProject
+		References\Profisee.MasterDataMaestro.Common.dll = References\Profisee.MasterDataMaestro.Common.dll
+		References\Profisee.MasterDataMaestro.Helper.dll = References\Profisee.MasterDataMaestro.Helper.dll
+		References\Profisee.MasterDataMaestro.ServiceAdaptor.dll = References\Profisee.MasterDataMaestro.ServiceAdaptor.dll
+		References\Profisee.MasterDataMaestro.Services.Contracts.dll = References\Profisee.MasterDataMaestro.Services.Contracts.dll
+		References\Profisee.Services.Sdk.AcceleratorFramework.dll = References\Profisee.Services.Sdk.AcceleratorFramework.dll
+		References\Profisee.Services.Sdk.Common.Contracts.dll = References\Profisee.Services.Sdk.Common.Contracts.dll
+		References\Profisee.Services.Sdk.Common.dll = References\Profisee.Services.Sdk.Common.dll
+		References\Profisee.Services.Sdk.WcfClient.dll = References\Profisee.Services.Sdk.WcfClient.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountLookupClient", "AccountLookupClient\AccountLookupClient.csproj", "{D3FB1B0F-B067-4B4C-9F43-E0BC3112A7B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingClient", "MatchingClient\MatchingClient.csproj", "{4DB88E3E-037D-4FFB-B2EE-164021C4DAD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LUB4CService", "LUB4CService\LUB4CService.csproj", "{8B6E95A6-2CAD-4D10-A6DB-BE3FBBB91950}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22200078-2F00-4417-B649-30AE9C8933B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22200078-2F00-4417-B649-30AE9C8933B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22200078-2F00-4417-B649-30AE9C8933B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22200078-2F00-4417-B649-30AE9C8933B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80AD1CA4-3C72-490B-9ED9-70BFA1187503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80AD1CA4-3C72-490B-9ED9-70BFA1187503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80AD1CA4-3C72-490B-9ED9-70BFA1187503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80AD1CA4-3C72-490B-9ED9-70BFA1187503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB49924-EFAD-410E-A488-C1B37A6E051C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB49924-EFAD-410E-A488-C1B37A6E051C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB49924-EFAD-410E-A488-C1B37A6E051C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB49924-EFAD-410E-A488-C1B37A6E051C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80C9695D-4230-40B3-B8CB-7597D2524A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80C9695D-4230-40B3-B8CB-7597D2524A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80C9695D-4230-40B3-B8CB-7597D2524A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80C9695D-4230-40B3-B8CB-7597D2524A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FB1B0F-B067-4B4C-9F43-E0BC3112A7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FB1B0F-B067-4B4C-9F43-E0BC3112A7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FB1B0F-B067-4B4C-9F43-E0BC3112A7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FB1B0F-B067-4B4C-9F43-E0BC3112A7B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB88E3E-037D-4FFB-B2EE-164021C4DAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB88E3E-037D-4FFB-B2EE-164021C4DAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB88E3E-037D-4FFB-B2EE-164021C4DAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB88E3E-037D-4FFB-B2EE-164021C4DAD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B6E95A6-2CAD-4D10-A6DB-BE3FBBB91950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B6E95A6-2CAD-4D10-A6DB-BE3FBBB91950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B6E95A6-2CAD-4D10-A6DB-BE3FBBB91950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B6E95A6-2CAD-4D10-A6DB-BE3FBBB91950}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.corp.profisee.com:8080/tfs/profisee
+		SccProjectUniqueName0 = Contracts\\Contracts.csproj
+		SccProjectName0 = Contracts
+		SccAuxPath0 = http://tfs.corp.profisee.com:8080/tfs/profisee
+		SccLocalPath0 = Contracts
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = ServiceLibrary\\ServiceLibrary.csproj
+		SccProjectName1 = ServiceLibrary
+		SccAuxPath1 = http://tfs.corp.profisee.com:8080/tfs/profisee
+		SccLocalPath1 = ServiceLibrary
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = Service_RESTService\\Service_RESTService.csproj
+		SccProjectName2 = Service_RESTService
+		SccAuxPath2 = http://tfs.corp.profisee.com:8080/tfs/profisee
+		SccLocalPath2 = Service_RESTService
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal
