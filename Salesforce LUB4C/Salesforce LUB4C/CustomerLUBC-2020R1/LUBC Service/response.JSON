@@ -1,0 +1,44 @@
+{
+    "MatchedMembers": [
+        {
+            "Attributes": [
+                {
+                    "Name": "MatchScore",
+                    "Value": 0.93125
+                },
+                {
+                    "Name": "Name",
+                    "Value": "Selene Olmos"
+                },
+                {
+                    "Name": "StdAddressLine1",
+                    "Value": "1221 Janes Way"
+                },
+                {
+                    "Name": "StdCity",
+                    "Value": "Colton"
+                },
+                {
+                    "Name": "StdStateProvince",
+                    "Value": "CA"
+                },
+                {
+                    "Name": "StdPostalCode",
+                    "Value": "923241671"
+                },
+                {
+                    "Name": "MatchPhone",
+                    "Value": "(909) 205-7290"
+                },
+                {
+                    "Name": "MatchEmail",
+                    "Value": "sjolmos@hotmail.com"
+                },
+                {
+                    "Name": "SourceCode",
+                    "Value": "0010P00001jza2tQAA"
+                }
+            ]
+        }
+    ]
+}

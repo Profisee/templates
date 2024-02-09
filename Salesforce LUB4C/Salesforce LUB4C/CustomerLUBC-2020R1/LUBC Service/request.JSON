@@ -1,0 +1,41 @@
+{
+    "StrategyName": "SCI Core LUBC",
+    "MatchAttributes": [
+        {
+            "Name": "SCIDID",
+            "Value": ""
+        },
+        {
+            "Name": "FirstName",
+            "Value": "Selene"
+        },
+        {
+            "Name": "LastName",
+            "Value": "Olmos"
+        },
+        {
+            "Name": "StdAddressLine1",
+            "Value": ""
+        },
+        {
+            "Name": "StdCity",
+            "Value": ""
+        },
+        {
+            "Name": "StdStateProvince",
+            "Value": ""
+        },
+        {
+            "Name": "StdPostalCode",
+            "Value": ""
+        },
+        {
+            "Name": "MatchPhone",
+            "Value": ""
+        },
+        {
+            "Name": "MatchEmail",
+            "Value": "sjolmos@hotmail.com"
+        }
+    ]
+}
